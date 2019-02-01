@@ -8,21 +8,51 @@ function addTodo(list) {
 }
 
 function addDate() {
-  date = new Date();
-  return date;
+  var date = new Date();
+  var monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+  newDate = `${date.getHours()}:${date.getMinutes()}, ${date.getDate()} ${
+    monthNames[date.getMonth()]
+  } ${date.getFullYear()}`;
+  return newDate;
 }
 
 function delete_array(delete_item) {
-  let delete_temporary = Todolist.filter(item => item.number !== delete_item);
+  const delete_temporary = Todolist.filter(item => item.number !== delete_item);
+
+  console.log(delete_temporary);
+  for (i = 0; delete_temporary[i] <= delete_temporary.length; i++) {
+    if (delete_temporary[i].number > 1) {
+      delete_temporary[i].number = delete_temporary[i].number - 1;
+    }
+    Todolist = delete_temporary;
+    return delete_temporary;
+  }
   Todolist = delete_temporary;
+  console.log(Todolist);
+  return Todolist;
 }
 
 function delete_todo() {
   console.log(' Todo list :');
-  for (i = 0; i <= Todolist.length; i++) {
-    console.log(Todolist[i]);
-  }
-  var delete_item = prompt(' No berapa yang ingin dihapus: ');
-  delete_array(delete_item);
-  return Todolist;
+  Todolist.forEach(todo => {
+    const todoListString = `${todo.number}: ${todo.list} (${todo.date})`;
+
+    console.log(todoListString);
+  });
+  let delete_item = prompt(' No berapa yang ingin dihapus: ');
+  var del = parseInt(delete_item);
+  delete_array(del);
 }
