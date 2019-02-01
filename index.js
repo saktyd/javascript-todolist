@@ -1,10 +1,10 @@
 var Todolist = [];
-var number = 0;
 
 function addTodo(list) {
   date = addDate();
-  number = number + 1;
-  Todolist.push({ number, list, date });
+  Todolist.push({ list, date });
+  console.log(' List Updated.');
+  displayTodolist();
 }
 
 function addDate() {
@@ -30,29 +30,28 @@ function addDate() {
 }
 
 function delete_array(delete_item) {
-  const delete_temporary = Todolist.filter(item => item.number !== delete_item);
-
-  console.log(delete_temporary);
-  for (i = 0; delete_temporary[i] <= delete_temporary.length; i++) {
-    if (delete_temporary[i].number > 1) {
-      delete_temporary[i].number = delete_temporary[i].number - 1;
-    }
-    Todolist = delete_temporary;
-    return delete_temporary;
-  }
+  var delete_temporary = Todolist.splice(delete_item, 1);
   Todolist = delete_temporary;
-  console.log(Todolist);
   return Todolist;
 }
 
-function delete_todo() {
+function delete_todolist() {
   console.log(' Todo list :');
-  Todolist.forEach(todo => {
-    const todoListString = `${todo.number}: ${todo.list} (${todo.date})`;
 
+  displayTodolist();
+  let delete_item = prompt('What number do you want to delete? ');
+  delete_item = delete_item - 1;
+  delete_array(delete_item);
+  console.log('---------------------');
+  console.log(' List Updated.');
+  displayTodolist();
+}
+
+function displayTodolist() {
+  let a = 1;
+  Todolist.forEach(todo => {
+    const todoListString = `${a}: ${todo.list} (${todo.date})`;
+    a++;
     console.log(todoListString);
   });
-  let delete_item = prompt(' No berapa yang ingin dihapus: ');
-  var del = parseInt(delete_item);
-  delete_array(del);
 }
