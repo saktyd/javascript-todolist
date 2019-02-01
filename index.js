@@ -1,57 +1,63 @@
-var Todolist = [];
+let todos = []
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
 
-function addTodo(list) {
-  date = addDate();
-  Todolist.push({ list, date });
-  console.log(' List Updated.');
-  displayTodolist();
+function addTodo(newText) {
+  todos.push({
+    text: newText,
+    date: addDate()
+  })
+  console.log('New todo added.')
 }
 
 function addDate() {
-  var date = new Date();
-  var monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  newDate = `${date.getHours()}:${date.getMinutes()}, ${date.getDate()} ${
+  const date = new Date()
+  const newDateString = `${date.getHours()}:${date.getMinutes()}, ${date.getDate()} ${
     monthNames[date.getMonth()]
-  } ${date.getFullYear()}`;
-  return newDate;
+  } ${date.getFullYear()}`
+
+  return newDateString
 }
 
-function delete_array(delete_item) {
-  var delete_temporary = Todolist.splice(delete_item, 1);
-  Todolist = delete_temporary;
-  return Todolist;
+function deleteTodo(deleteItemId) {
+  const deleted = todos.filter((todo, index) => {
+    return index !== deleteItemId
+  })
+  todos = deleted
 }
 
-function delete_todolist() {
-  console.log(' Todo list :');
+function deleteTodoPrompt() {
+  console.log('Todo list:')
+  displayTodoList()
 
-  displayTodolist();
-  let delete_item = prompt('What number do you want to delete? ');
-  delete_item = delete_item - 1;
-  delete_array(delete_item);
-  console.log('---------------------');
-  console.log(' List Updated.');
-  displayTodolist();
+  const deleteItemId = prompt('What id of the todo do you want to delete?')
+  const deleteItemIndex = deleteItemId - 1
+  deleteTodo(deleteItemIndex)
+
+  console.log(`Todo with id ${deleteItemId} deleted.`)
 }
 
-function displayTodolist() {
-  let a = 1;
-  Todolist.forEach(todo => {
-    const todoListString = `${a}: ${todo.list} (${todo.date})`;
-    a++;
-    console.log(todoListString);
-  });
+function displayTodoList() {
+  todos.forEach((todo, index) => {
+    const todoListString = `${index + 1}: ${todo.text} (${todo.date})`
+    console.log(todoListString)
+  })
 }
+
+addTodo('Learning JavaScript')
+addTodo('Running on the water')
+addTodo('Flying to sky')
+displayTodoList()
+// deleteTodoPrompt()
